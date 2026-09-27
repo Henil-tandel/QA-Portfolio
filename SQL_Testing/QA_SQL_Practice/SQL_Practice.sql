@@ -58,45 +58,48 @@ INSERT INTO orders (order_id, user_id, product_id, quantity, status) VALUES
 (1009, 7, 108, 4, 'Completed'),
 (1010, 8, 103, 2, 'Completed');
 
-/*Select all users*/
+/*1.Select all users*/
 SELECT * FROM users;
 
-/*Select active users*/
+/*2.Select active users*/
 SELECT * FROM users WHERE status="active";
 
-/*Products above 500 price*/
+/*3.Products above 500 price*/
 SELECT * FROM products WHERE price<500;
 
-/*Products price between 300 and 1000*/
+/*4.Products price between 300 and 1000*/
 SELECT * FROM products WHERE price BETWEEN 300 AND 1000;
 
-/*Products from highest to lowest price*/
+/*5. Products from highest to lowest price*/
 SELECT * FROM products ORDER BY price DESC;
 
-/*Count total users*/
+/*6. Count total users*/
 SELECT COUNT(*) FROM users;
 
-/*Count users by status*/
+/*7. Count users by status*/
 SELECT status,COUNT(*) FROM users GROUP BY status;
 
-/*Average product price*/
+/*8. Average product price*/
 SELECT AVG(price) FROM products;
 
-/*Count products in each category*/
+/*9. Count products in each category*/
 SELECT category,COUNT(*) FROM products GROUP BY category;
 
-/*Join users with their orders*/
+/*10. Categories containing more than 2 products*/
+SELECT category,COUNT(*) AS product_count FROM products GROUP BY category HAVING COUNT(*) > 2;
+
+/*11. Join users with their orders*/
 SELECT * FROM users INNER JOIN orders ON users.user_id = orders.user_id;
 
-/*Find users who have placed orders*/
+/*12. Find users who have placed orders*/
 SELECT DISTINCT users.user_id, users.name FROM users INNER JOIN orders ON users.user_id = orders.user_id;
 
-/*Find users who not have placed orders*/
+/*13. Find users who not have placed orders*/
 SELECT * FROM users LEFT JOIN orders ON users.user_id = orders.user_id WHERE orders.order_id IS NULL;
 
-/*Join orders with product details*/
+/*14. Join orders with product details*/
 SELECT * FROM orders INNER JOIN products ON orders.product_id = products.product_id;
 
-/*Find orders where quantity>1*/
+/*15. Find orders where quantity>1*/
 SELECT DISTINCT orders.product_id,products.product_name,orders.quantity FROM orders INNER JOIN products ON orders.product_id = products.product_id WHERE orders.quantity>1;
 
